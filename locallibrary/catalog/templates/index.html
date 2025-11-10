@@ -19,4 +19,8 @@
     <li><strong>Books that contain the word {{ search_for_book}}:</strong> {{ num_books_contain_search }}</li>
   </ul>
 
+  <p>
+    You have visited this page {{ num_visits }}{% if num_visits == 1 %} time{% else %} times{% endif %}.
+  </p>
+
 {% endblock %}

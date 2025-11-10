@@ -15,12 +15,16 @@ def index(request):
     num_books_contain_search = Book.objects.filter(title__icontains=search_for_book).count()
     num_genres_contain_search = Genre.objects.filter(name__icontains=search_for_genre).count()
 
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+
     return render(
         request,
         'index.html',
         context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,
                  'num_authors':num_authors,'search_for_book':search_for_book,'search_for_genre':search_for_genre,
-                 'num_books_contain_search':num_books_contain_search, 'num_genres_contain_search':num_genres_contain_search},
+                 'num_books_contain_search':num_books_contain_search, 'num_genres_contain_search':num_genres_contain_search,
+                 'num_visits':num_visits},
     )
 
 class BookListView(generic.ListView):
