@@ -105,3 +105,21 @@ class AuthorDelete(PermissionRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy('authors')
 
     permission_required = 'catalog.delete_author'
+
+class BookCreate(PermissionRequiredMixin, generic.CreateView):
+    model = Book
+    fields = '__all__'
+
+    permission_required = 'catalog.add_book'
+
+class BookUpdate(PermissionRequiredMixin, generic.UpdateView):
+    model = Book
+    fields = ['title','author','summary','isbn','genre','language']
+
+    permission_required = 'catalog.change_book'
+
+class BookDelete(PermissionRequiredMixin, generic.DeleteView):
+    model = Book
+    success_url = reverse_lazy('books')
+
+    permission_required = 'catalog.delete_book'
