@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
+from django.core.exceptions import ValidationError
 from datetime import date
 import uuid
 from django.contrib.auth.models import User
@@ -103,6 +104,28 @@ class Author(models.Model):
     last_name = models.CharField(max_length=100)
     date_of_birth = models.DateField(null=True, blank=True)
     date_of_death = models.DateField('Died', null=True, blank=True)
+
+    def clean(self):
+        super().clean()
+
+        dob = self.date_of_birth
+        dod = self.date_of_death
+        today = date.today()
+
+        if dob and dob > today:
+            raise ValidationError({
+                'date_of_birth': ('Date of birth cannot be in the future.')
+            })
+
+        if dod and dod > today:
+            raise ValidationError({
+                'date_of_death': ('Date of death cannot be in the future.')
+            })
+
+        if dob and dod and dob > dod:
+            raise ValidationError(
+                ('Date of birth cannot be after date of death.')
+            )
 
     def get_absolute_url(self):
         return reverse('author-detail', args=[str(self.id)])
