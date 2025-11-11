@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from .models import Book, Author, BookInstance, Genre
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
@@ -77,3 +76,13 @@ def renew_book_librarian(request, pk):
         form = RenewBookForm(initial={'renewal_date': proposed_renewal_date,})
 
     return render(request, 'catalog/book_renew_librarian.html', {'form': form, 'bookinst':book_inst})
+
+class AllBorrowedBooksListView(PermissionRequiredMixin,generic.ListView):
+    model = BookInstance
+    template_name = 'catalog/all_borrowed_books_list.html'
+    paginate_by = 10
+
+    permission_required = 'catalog.can_mark_returned'
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o').order_by('due_back')
