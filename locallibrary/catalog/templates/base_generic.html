@@ -39,8 +39,10 @@
              {% if user.is_staff %}
                <hr>
                <ul class="sidebar-nav">
-               <li>Staff</li>
-               <li><a href="{% url 'all-borrowed-books' %}">All borrowed</a></li>
+                 <li>Staff</li>
+                 <li><a href="{% url 'all-borrowed-books' %}">All borrowed</a></li>
+                 <li><a href="{% url 'author-create' %}">Create author</a></li>
+               </ul>
              {% endif %}
           {% endblock %}
         </div>
