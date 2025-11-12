@@ -23,12 +23,17 @@
               <li><a href="{% url 'index' %}">Home</a></li>
               <li><a href="{% url 'books' %}">All books</a></li>
               <li><a href="{% url 'authors' %}">All authors</a></li>
+              <li><a href="{% url 'bookinstances' %}">All book copies</a></li>
+              <li><a href="{% url 'genres' %}">All genres</a></li>
+              <li><a href="{% url 'languages' %}">All languages</a></li>
+            </ul>
+
+            <ul class="sidebar-nav">
               {% if user.is_authenticated %}
                 <li>User: {{ user.get_username }}</li>
                 <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>
                 <form method="post" action="{% url 'logout' %}">
                   {% csrf_token %}
-                  <input type="hidden">
                   <button type="submit">Logout</button>
                 </form>
               {% else %}
@@ -43,6 +48,9 @@
                  <li><a href="{% url 'all-borrowed-books' %}">All borrowed</a></li>
                  <li><a href="{% url 'author-create' %}">Create author</a></li>
                  <li><a href="{% url 'book-create' %}">Create book</a></li>
+                 <li><a href="{% url 'bookinstance-create' %}">Create bookinstance</a></li>
+                 <li><a href="{% url 'language-create' %}">Create language</a></li>
+                 <li><a href="{% url 'genre-create' %}">Create genre</a></li>
                </ul>
              {% endif %}
           {% endblock %}
