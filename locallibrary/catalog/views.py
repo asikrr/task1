@@ -108,7 +108,7 @@ def renew_book_librarian(request, pk):
 
 class AllBorrowedBooksListView(PermissionRequiredMixin, generic.ListView):
     model = BookInstance
-    template_name = 'catalog/all_borrowed_books_list.html'
+    template_name = 'catalog/bookinstance_list_borrowed_all.html'
     paginate_by = 10
 
     permission_required = 'catalog.can_mark_returned'
